@@ -19,3 +19,6 @@ docs/*
 npm-debug.log
 coverage
 coverage/*
+demo/*
+src/*
+src-es5/*

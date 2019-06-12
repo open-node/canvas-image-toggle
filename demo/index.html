@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Canvas 图片平滑切换</title>
+</head>
+<body>
+<div id="container"></div>
+<script src="../browser.js"></script>
+<script>
+const imgs = [
+  './demo1.jpg',
+  './demo2.jpg'
+];
+
+Slider({
+  width: 600,
+  height: 400,
+  times: 400,
+  interval: 5 * 1000,
+  process: 3 * 1000,
+  container: document.getElementById('container'),
+  getImgSrc: i => imgs[i % 2]
+});
+</script>
+</body>
+</html>
+

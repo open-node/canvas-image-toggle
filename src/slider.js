@@ -10,7 +10,15 @@
  *   getImgSrc: function // 获取展示图片地址的函数
  * }
  */
-const Slider = ({ width, height, interval, process, container, getImgSrc }) => {
+const Slider = ({
+  width,
+  height,
+  times,
+  interval,
+  process,
+  container,
+  getImgSrc
+}) => {
   if (!container || !container.appendChild) throw Error(`指定容器不存在`);
   width = Math.max(+width, 0) || 600;
   height = Math.max(+height, 0) || 400;
@@ -19,24 +27,23 @@ const Slider = ({ width, height, interval, process, container, getImgSrc }) => {
   process = Math.max(+process, 0) || 5 * 1000;
   const dy = Math.ceil(height / times);
   container.innerHTML = `
-    <canvas style="position: absolute; z-index: 1" width="${width}" height="${height}"></canvas>
-    <canvas style="position: absolute; z-index: 2" width="${width}" height="${height}"></canvas>
+    <canvas style="" width="${width}" height="${height}"></canvas>
+    <canvas style="" width="${width}" height="${height}"></canvas>
   `;
-  const [fgCanvas, bgCanvas] = container.getElementByTagName("canvas");
+  const [fgCanvas, bgCanvas] = container.getElementsByTagName("canvas");
   const fg = fgCanvas.getContext("2d");
   const bg = bgCanvas.getContext("2d");
   let _index = 0;
 
   // 执行过渡效果
-  const slide = (i, remainMS) => {
-    if (times <= i + 1) return setTimeout(drawNextImage, interval);
+  const slide = i => {
+    if (times < i) return setTimeout(drawNextImage, interval);
     const y = dy * i;
-    const imgData = bg.getImageData(0, y, width, dy);
-    const timeout = Math.floor(remainMS / (times - i));
+    const imgData = bg.getImageData(0, height - y, width, dy);
     setTimeout(() => {
-      fg.putImageData(imgData, 0, y);
-      slide(i + 1, remainMS - timeout);
-    }, timeout);
+      fg.putImageData(imgData, 0, height - y);
+      slide(i + 1);
+    }, process / times);
   };
 
   // 加载绘制下一张图片
