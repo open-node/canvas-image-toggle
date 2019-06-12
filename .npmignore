@@ -20,5 +20,6 @@ npm-debug.log
 coverage
 coverage/*
 demo/*
+index.html
 src/*
 src-es5/*
