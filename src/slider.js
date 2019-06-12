@@ -27,8 +27,8 @@ const Slider = ({
   process = Math.max(+process, 0) || 5 * 1000;
   const dy = Math.ceil(height / times);
   container.innerHTML = `
-    <canvas style="" width="${width}" height="${height}"></canvas>
-    <canvas style="" width="${width}" height="${height}"></canvas>
+    <canvas class="slider-fg" width="${width}" height="${height}"></canvas>
+    <canvas class="slider-bg" width="${width}" height="${height}"></canvas>
   `;
   const [fgCanvas, bgCanvas] = container.getElementsByTagName("canvas");
   const fg = fgCanvas.getContext("2d");
