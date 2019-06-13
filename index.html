@@ -11,15 +11,31 @@ const imgs = [
   './assets/demo2.jpg'
 ];
 
+const params = {};
+location.search.slice(1).split('&').forEach(x => {
+  const [key, value] = x.split('=');
+  params[key] = decodeURIComponent(value);
+});
+
 Slider({
   width: 600,
   height: 400,
   times: 400,
-  interval: 5 * 1000,
-  process: 3 * 1000,
+  interval: params.interval,
+  process: params.process,
   container: document.getElementById('container'),
   getImgSrc: i => imgs[i % 2]
 });
+
+if (params.display === 'no') {
+  document.write(`
+  <style>
+  #container .slider-bg {
+    display: none;
+  }
+  </style>
+  `);
+}
 </script>
 </body>
 </html>
